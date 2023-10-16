@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spoilerify Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 py-10">
+  <div class="container mx-auto max-w-md p-4 bg-white rounded-lg shadow-lg">
+    <h1 class="text-2xl font-semibold mb-4">Spoilerify Text</h1>
+    <form id="spoilerifyForm">
+      <div class="mb-4">
+        <label for="inputText" class="block text-gray-700">Enter Text:</label>
+        <input type="text" id="inputText" name="inputText" class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500" required>
+      </div>
+      <div class="mb-4">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Spoilerify</button>
+      </div>
+    </form>
+    <div id="spoilerifiedText" class="hidden mt-4 bg-yellow-100 p-3 rounded-lg">
+      <p class="text-sm text-gray-700">Spoilerified Text:</p>
+      <p id="spoilerText" class="text-lg font-semibold"></p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("spoilerifyForm");
+      const inputText = document.getElementById("inputText");
+      const spoilerifiedText = document.getElementById("spoilerifiedText");
+      const spoilerText = document.getElementById("spoilerText");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const text = inputText.value;
+        const spoilerified = spoilerify(text);
+        spoilerText.textContent = spoilerified;
+        spoilerifiedText.classList.remove("hidden");
+      });
+
+      function spoilerify(text) {
+        if (typeof text === "string") {
+          text = text.split("");
+        }
+        const spoilerText = text.map(char => `||${char}||`).join("");
+        return spoilerText;
+      }
+    });
+  </script>
+</body>
+</html>
